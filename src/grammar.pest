@@ -2,8 +2,14 @@ file = { "hello world" }
 
 block      =  { "{" ~ MLF ~ block_line ~ MLF ~ "}" }
 block_line = _{ expr | (statement ~ MLF)* }
-statement  =  { (decl | expr) ~ TERMINATE }
+statement  =  { (decl | type_decl | expr) ~ TERMINATE }
 decl       =  { "let" ~ #name = ident ~ #args = (ident)* ~ "=" ~ expr }
+
+type_decl  =  { "type" ~ #name = type_ident ~ "=" ~ type_expr }
+type_expr  =  { tuple | type_ident }
+tuple      =  { "#(" ~ type_expr* ~ ")" }
+type_ident = ${ #name = ident ~ #args = type_args? }
+type_args  =  { "<" ~ type_ident* ~ ">" }
 
 expr       =  { infix_expr | call_expr | term }
 term       = _{ ident | literal | "(" ~ MLF ~ expr ~ MLF ~ ")" | block }

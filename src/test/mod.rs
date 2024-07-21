@@ -1,6 +1,7 @@
 mod expressions;
 mod literals;
 mod statements;
+mod types;
 
 use crate::parse;
 

@@ -130,4 +130,27 @@ fn it_parses_calls() {
             ])
         ])
     ]);
+    parses_to!(parser: SnekParser, input: "print {1 + 1} a", rule: Rule::expr, tokens: [
+        expr(0, 15, [
+            call_expr(0, 15, [
+                ident(0, 5),
+                block(6, 13, [
+                    expr(7, 12, [
+                        infix_expr(7, 12, [
+                            literal(7, 8, [
+                                integer(7, 8)
+                            ]),
+                            operator(9, 10),
+                            expr(11, 12, [
+                                literal(11, 12, [
+                                    integer(11, 12)
+                                ]),
+                            ])
+                        ])
+                    ])
+                ]),
+                ident(14, 15)
+            ])
+        ])
+    ]);
 }
