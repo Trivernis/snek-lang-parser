@@ -1,0 +1,24 @@
+
+type Food = #[
+	Apple Num
+	Banana Num
+	Cereal Num
+	Milk #(String Num)
+]
+
+type Utils = #[
+	Paper Num
+	Detergent Num
+	Pencils Num
+]
+
+type Packaging = #[
+	Bag
+	PlasticBag
+]
+
+type ShoppingList = #{
+	food: Food
+	utils: Utils
+	packaging: Packaging
+}
