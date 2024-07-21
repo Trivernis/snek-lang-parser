@@ -1,0 +1,12 @@
+let add2 a = a + 2
+
+let multi_add2 l = {
+	let items = items l
+	add_all items 2
+}
+
+let basic_value = 10
+
+let calculation = (1 * 1) + (2 * (2 + 3))
+
+let calculation_with_fn fn = 1 * fn (2 * 2)

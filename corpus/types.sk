@@ -22,3 +22,19 @@ type ShoppingList = #{
 	utils: Utils
 	packaging: Packaging
 }
+
+type NestedHell = #[
+	NoNesting Num
+	Nesting #[
+		FirstLevel #[
+			SecondLevel #[
+				Third Lvl<a>
+			]
+			Second #{
+				first: Num
+				second: Num
+			}
+		]
+		StillFirst Num<a>
+	]
+]
