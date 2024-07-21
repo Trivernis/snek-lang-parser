@@ -84,6 +84,40 @@ fn it_parses_recs() {
 }
 
 #[test]
+fn it_parses_enums() {
+    parses_to!(parser: SnekParser, input: "type MyEnum = #[Var1 Num\nVar2 Type\n]", rule: Rule::statement, tokens: [
+        statement(0, 36, [
+            type_decl(0, 36, [
+                type_ident(5, 11, [
+                    ident(5, 11)
+                ]),
+                type_expr(14, 36, [
+                    r#enum(14, 36, [
+                        enum_vrt(16, 24, [
+                            ident(16, 20),
+                            type_expr(21, 24, [
+                                type_ident(21, 24, [
+                                    ident(21, 24)
+                                ])
+                            ]),
+                        ]),
+                        enum_vrt(25, 34, [
+                            ident(25, 29),
+                            type_expr(30, 34, [
+                                type_ident(30, 34, [
+                                    ident(30, 34)
+                                ])
+                            ]),
+                        ]),
+                    ])
+                ])
+            ]),
+            EOI(36, 36)
+        ])
+    ]);
+}
+
+#[test]
 fn it_parses_generics() {
     parses_to!(parser: SnekParser, input: "type MyNum<a> = Num<a>", rule: Rule::statement, tokens: [
         statement(0, 22, [

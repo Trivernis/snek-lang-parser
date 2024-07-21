@@ -5,14 +5,20 @@ block_line = _{ expr | (statement ~ MLF)* }
 statement  =  { (decl | type_decl | expr) ~ TERMINATE }
 decl       =  { "let" ~ #name = ident ~ #args = (ident)* ~ "=" ~ expr }
 
-type_decl   =  { "type" ~ #name = type_ident ~ "=" ~ type_expr }
-type_expr   =  { tuple | rec | type_ident }
+type_decl = { "type" ~ #name = type_ident ~ "=" ~ type_expr }
+type_expr = { tuple | rec | enum | type_ident }
+
 tuple       =  { "#(" ~ MLF ~ tuple_entry* ~ MLF ~ ")" }
 tuple_entry = _{ type_expr ~ MLF }
-rec         =  { "#{" ~ MLF ~ (rec_field ~ TERMINATE ~ MLF)* ~ rec_field? ~ MLF ~ "}" }
-rec_field   =  { #field_name = ident ~ ":" ~ #field_type = type_expr* }
-type_ident  = ${ #name = ident ~ #args = type_args? }
-type_args   =  { "<" ~ MLF ~ type_ident* ~ MLF ~ ">" }
+
+rec       = { "#{" ~ MLF ~ (rec_field ~ TERMINATE ~ MLF)* ~ rec_field? ~ MLF ~ "}" }
+rec_field = { #field_name = ident ~ ":" ~ #field_type = type_expr* }
+
+enum     = { "#[" ~ (enum_vrt ~ TERMINATE ~ MLF)* ~ enum_vrt? ~ "]" }
+enum_vrt = { #vrt_name = ident ~ type_expr }
+
+type_ident = ${ #name = ident ~ #args = type_args? }
+type_args  =  { "<" ~ MLF ~ type_ident* ~ MLF ~ ">" }
 
 expr       =  { infix_expr | call_expr | term }
 term       = _{ ident | literal | "(" ~ MLF ~ expr ~ MLF ~ ")" | block }
