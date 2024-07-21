@@ -1,10 +1,12 @@
 file = { "hello world" }
 
-statement = { decl }
-decl      = { "let" ~ #name = ident ~ #args = (ident)* ~ "=" ~ expr }
+block      =  { "{" ~ MLF ~ block_line ~ MLF ~ "}" }
+block_line = _{ expr | (statement ~ MLF)* }
+statement  =  { (decl | expr) ~ TERMINATE }
+decl       =  { "let" ~ #name = ident ~ #args = (ident)* ~ "=" ~ expr }
 
 expr       =  { infix_expr | call_expr | term }
-term       = _{ ident | literal | "(" ~ expr ~ ")" }
+term       = _{ ident | literal | "(" ~ MLF ~ expr ~ MLF ~ ")" | block }
 call_expr  =  {
     #name = ident ~ #args = (term)+
 }
@@ -14,7 +16,7 @@ infix_expr =  {
 
 operator = { "+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==" | "!=" }
 
-ident         = @{ ALPHABETIC ~ (ALPHABETIC | NUMBER | "_")* | quoted_indent }
+ident         = @{ !KEYWORD ~ ALPHABETIC ~ (ALPHABETIC | NUMBER | "_")* | quoted_indent }
 quoted_indent = _{ "`" ~ (!"`" ~ ANY)+ ~ "`" }
 
 literal = { string | number | boolean | char }
@@ -29,4 +31,8 @@ float   = @{
 byte    = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
 boolean = @{ "true" | "false" }
 
-WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
+WHITESPACE = _{ " " | "\t" }
+KEYWORD    = _{ "let" }
+TERMINATE  = _{ LF | EOI | ";" }
+MLF        = _{ (LF)* }
+LF         = _{ "\n" | "\r" }

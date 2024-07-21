@@ -22,6 +22,23 @@ fn it_parses_addition() {
 }
 
 #[test]
+fn it_parses_plain_values() {
+    parses_to!(parser: SnekParser, input: "10", rule: Rule::expr, tokens: [
+        expr(0, 2, [
+            literal(0, 2, [
+                integer(0, 2)
+            ]),
+        ])
+    ]);
+
+    parses_to!(parser: SnekParser, input: "test", rule: Rule::expr, tokens: [
+        expr(0, 4, [
+            ident(0, 4),
+        ])
+    ]);
+}
+
+#[test]
 fn it_parses_addition_with_variables() {
     parses_to!(parser: SnekParser, input: "first + second", rule: Rule::expr, tokens: [
         expr(0, 14, [
