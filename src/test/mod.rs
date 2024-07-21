@@ -1,4 +1,5 @@
 use pest::iterators::Pair;
+mod infix_expressions;
 mod literals;
 
 use crate::{parse, parse_rule, Rule};

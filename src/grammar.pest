@@ -1,5 +1,15 @@
 file = { "hello world" }
 
+expr = { infix_expr | term }
+
+term = _{ literal | "(" ~ expr ~ ")" }
+
+infix_expr = {
+    #lhs = term ~ operator ~ #rhs = expr
+}
+
+operator = { "+" | "-" | "*" | "/" | "&&" | "||" }
+
 literal = { string | number | boolean }
 
 string = { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
