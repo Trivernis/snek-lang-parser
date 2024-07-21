@@ -5,6 +5,16 @@ This is a parser implementation for snek-lang using [pest](https://pest.rs).
 Snek-Lang is a programming language that I'm working on and might never finish.
 I don't know where this will lead me.
 
+
+## TODO (parser)
+
+- [ ] constructing complex type instances
+- [ ] anonymous types
+- [ ] pattern matching
+- [ ] if-expressions
+- [ ] match-expressions
+- [ ] imports and exports
+
 ## Snek-Lang (so far)
 
 ### Primitives
@@ -96,3 +106,4 @@ type Nested = #{
   }
 }
 ```
+
