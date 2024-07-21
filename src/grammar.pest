@@ -2,7 +2,7 @@ file = { "hello world" }
 
 expr = { infix_expr | term }
 
-term = _{ literal | "(" ~ expr ~ ")" }
+term = _{ ident | literal | "(" ~ expr ~ ")" }
 
 infix_expr = {
     #lhs = term ~ operator ~ #rhs = expr
@@ -10,20 +10,18 @@ infix_expr = {
 
 operator = { "+" | "-" | "*" | "/" | "&&" | "||" }
 
+ident         = @{ ALPHABETIC ~ (ALPHABETIC | NUMBER | "_")* | quoted_indent }
+quoted_indent = _{ "`" ~ (!"`" ~ ANY)+ ~ "`" }
+
 literal = { string | number | boolean }
 
-string = { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
-
-number = _{ byte | float | integer }
-
+string  =  { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
+number  = _{ byte | float | integer }
 integer = @{ "-"? ~ ASCII_DIGIT+ }
-
-float = @{
+float   = @{
     "-"? ~ (ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT* | ASCII_DIGIT* ~ "." ~ ASCII_DIGIT+)
 }
-
-byte = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
-
+byte    = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
 boolean = @{ "true" | "false" }
 
 WHITESPACE = _{ " " | "\t" | "\r" | "\n" }

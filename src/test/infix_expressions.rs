@@ -22,6 +22,21 @@ fn it_parses_addition() {
 }
 
 #[test]
+fn it_parses_addition_with_variables() {
+    parses_to!(parser: SnekParser, input: "first + second", rule: Rule::expr, tokens: [
+        expr(0, 14, [
+            infix_expr(0, 14, [
+                ident(0, 5),
+                operator(6, 7),
+                expr(8, 14, [
+                    ident(8, 14)
+                ])
+            ])
+        ])
+    ]);
+}
+
+#[test]
 fn it_parses_subtraction() {
     parses_to!(parser: SnekParser, input: "1.0 - 1.1", rule: Rule::expr, tokens: [
         expr(0, 9, [
