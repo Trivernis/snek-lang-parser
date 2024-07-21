@@ -3,8 +3,11 @@ file = { "hello world" }
 statement = { decl }
 decl      = { "let" ~ #name = ident ~ #args = (ident)* ~ "=" ~ expr }
 
-expr       =  { infix_expr | term }
+expr       =  { infix_expr | call_expr | term }
 term       = _{ ident | literal | "(" ~ expr ~ ")" }
+call_expr  =  {
+    #name = ident ~ #args = (term)+
+}
 infix_expr =  {
     #lhs = term ~ operator ~ #rhs = expr
 }

@@ -1,4 +1,4 @@
-mod infix_expressions;
+mod expressions;
 mod literals;
 mod statements;
 
