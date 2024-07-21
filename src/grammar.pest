@@ -13,9 +13,10 @@ operator = { "+" | "-" | "*" | "/" | "&&" | "||" }
 ident         = @{ ALPHABETIC ~ (ALPHABETIC | NUMBER | "_")* | quoted_indent }
 quoted_indent = _{ "`" ~ (!"`" ~ ANY)+ ~ "`" }
 
-literal = { string | number | boolean }
+literal = { string | number | boolean | char }
 
 string  =  { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
+char    =  { "'" ~ !"'" ~ ANY ~ "'" }
 number  = _{ byte | float | integer }
 integer = @{ "-"? ~ ASCII_DIGIT+ }
 float   = @{

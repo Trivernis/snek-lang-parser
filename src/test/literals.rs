@@ -76,6 +76,20 @@ fn it_parses_strings() {
 }
 
 #[test]
+fn it_parses_chars() {
+    parses_to!(parser: SnekParser, input: "'c'", rule: Rule::literal, tokens: [
+        literal(0, 3, [
+            char(0, 3)
+        ])
+    ]);
+    parses_to!(parser: SnekParser, input: r"'\''", rule: Rule::literal, tokens: [
+        literal(0, 3, [
+            char(0, 3)
+        ])
+    ]);
+}
+
+#[test]
 fn it_parses_booleans() {
     parses_to!(parser: SnekParser, input: "true", rule: Rule::literal, tokens: [
         literal(0, 4, [
