@@ -1,6 +1,12 @@
 use pest::{consumes_to, parses_to};
+use pest_test::PestTester;
 
 use crate::{Rule, SnekParser};
+use lazy_static::lazy_static;
+
+lazy_static! {
+    static ref TESTER: PestTester<Rule, SnekParser> = super::s_tester("types");
+}
 
 #[test]
 fn it_parses_aliases() {
@@ -51,97 +57,21 @@ fn it_parses_tuples() {
 
 #[test]
 fn it_parses_recs() {
-    parses_to!(parser: SnekParser, input: "type MyRec = #{\nfield1: Num\n field2: Num2 }", rule: Rule::statement, tokens: [
-        statement(0, 43, [
-            type_decl(0, 43, [
-                type_ident(5, 10, [
-                    ident(5, 10)
-                ]),
-                type_expr(13, 43, [
-                    rec(13, 43, [
-                        rec_field(16, 27, [
-                            ident(16, 22),
-                            type_expr(24, 27, [
-                                type_ident(24, 27, [
-                                    ident(24, 27)
-                                ])
-                            ]),
-                        ]),
-                        rec_field(29, 41, [
-                            ident(29, 35),
-                            type_expr(37, 41, [
-                                type_ident(37, 41, [
-                                    ident(37, 41)
-                                ])
-                            ]),
-                        ])
-                    ])
-                ])
-            ]),
-            EOI(43, 43)
-        ])
-    ]);
+    if let Err(e) = (*TESTER).evaluate_strict("recs") {
+        panic!("{e}")
+    }
 }
 
 #[test]
 fn it_parses_enums() {
-    parses_to!(parser: SnekParser, input: "type MyEnum = #[Var1 Num\nVar2 Type\n]", rule: Rule::statement, tokens: [
-        statement(0, 36, [
-            type_decl(0, 36, [
-                type_ident(5, 11, [
-                    ident(5, 11)
-                ]),
-                type_expr(14, 36, [
-                    r#enum(14, 36, [
-                        enum_vrt(16, 24, [
-                            ident(16, 20),
-                            type_expr(21, 24, [
-                                type_ident(21, 24, [
-                                    ident(21, 24)
-                                ])
-                            ]),
-                        ]),
-                        enum_vrt(25, 34, [
-                            ident(25, 29),
-                            type_expr(30, 34, [
-                                type_ident(30, 34, [
-                                    ident(30, 34)
-                                ])
-                            ]),
-                        ]),
-                    ])
-                ])
-            ]),
-            EOI(36, 36)
-        ])
-    ]);
+    if let Err(e) = (*TESTER).evaluate_strict("enums") {
+        panic!("{e}")
+    }
 }
 
 #[test]
 fn it_parses_generics() {
-    parses_to!(parser: SnekParser, input: "type MyNum<a> = Num<a>", rule: Rule::statement, tokens: [
-        statement(0, 22, [
-            type_decl(0, 22, [
-                type_ident(5, 13, [
-                    ident(5, 10),
-                    type_args(10, 13, [
-                        type_ident(11, 12, [
-                            ident(11, 12)
-                        ])
-                    ])
-                ]),
-                type_expr(16, 22, [
-                    type_ident(16, 22, [
-                        ident(16, 19),
-                        type_args(19, 22, [
-                            type_ident(20, 21, [
-                                ident(20, 21)
-                            ])
-                        ])
-                    ])
-                ])
-            ]),
-            EOI(22, 22)
-        ])
-    ]);
+    if let Err(e) = (*TESTER).evaluate_strict("generics") {
+        panic!("{e}")
+    }
 }

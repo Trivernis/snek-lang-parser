@@ -68,39 +68,38 @@ let complex_addition a b c = {
 
 ### Complex types
 
-All type declarations follow a similar patter.
 The value for a type is one of the following:
 
-- `#[...]` enum
-- `#{...}` record
+- `enum {...}` enum
+- `rec {...}` record
 - `#(...)` tuple
 
 These expressions can be nested.
 
 ```sk
-type MyEnum = #[
+type MyEnum = enum {
   Var1 Int
   Var2 Bool
-]
+}
 
-type MyRec = #{
+type MyRec = rec {
   field1: Float
   field2: Str
 }
 
 // records declared in one line need to put a semicolon after each field declaration
-type MyRecOneline = #{field1: Float; field2: Str}
+type MyRecOneline = rec {field1: Float; field2: Str}
 
 // tuples can be declared in one line without a semicolon because there's no ambiguity 
 type MyTuple = #(Float Str)
 
-type Nested = #{
-  field1: #[
+type Nested = rec {
+  field1: enum {
     Boolean Bool
     Number Float
-  ]
+  }
   field2: #(Bool Bool)
-  field3: #{
+  field3: rec {
     first: Int
     second: Int
   }

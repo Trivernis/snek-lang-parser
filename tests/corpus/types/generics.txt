@@ -1,0 +1,33 @@
+Generics Test
+
+======
+
+type MyNum<a> = Num<a>
+
+======
+
+(file 
+	(statement 
+		(type_decl
+		  (type_ident
+	  		(ident: "MyNum")
+				(type_args 
+					(type_ident
+						(ident: "a")
+					)
+				)
+		  )
+	  	(type_expr
+				(type_ident
+					(ident: "Num")
+					(type_args 
+						(type_ident
+							(ident: "a")
+						)
+					)
+				)
+			)
+		)
+	)
+	(EOI: "")
+)

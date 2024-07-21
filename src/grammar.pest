@@ -7,17 +7,20 @@ decl       =  { "let" ~ #name = ident ~ #args = (ident)* ~ "=" ~ expr }
 block      =  { "{" ~ MLF ~ block_line ~ MLF ~ "}" }
 block_line = _{ expr | (statement ~ MLF)* }
 
-type_decl = { "type" ~ #name = type_ident ~ "=" ~ type_expr }
-type_expr = { tuple | rec | enum | type_ident }
+type_decl =  { "type" ~ #name = type_ident ~ "=" ~ type_expr }
+type_expr =  { type_term | func | type_ident }
+type_term = _{ tuple | rec | enum | type_ident }
 
 tuple       =  { "#(" ~ MLF ~ tuple_entry* ~ MLF ~ ")" }
 tuple_entry = _{ type_expr ~ MLF }
 
-rec       = { "#{" ~ MLF ~ (rec_field ~ TERMINATE ~ MLF)* ~ rec_field? ~ MLF ~ "}" }
+rec       = { "rec" ~ "{" ~ MLF ~ (rec_field ~ TERMINATE ~ MLF)* ~ rec_field? ~ MLF ~ "}" }
 rec_field = { #field_name = ident ~ ":" ~ #field_type = type_expr* }
 
-enum     = { "#[" ~ MLF ~ (enum_vrt ~ TERMINATE ~ MLF)* ~ enum_vrt? ~ "]" }
+enum     = { "enum" ~ "{" ~ MLF ~ (enum_vrt ~ TERMINATE ~ MLF)* ~ enum_vrt? ~ "}" }
 enum_vrt = { #vrt_name = ident ~ type_expr? }
+
+func = { type_term ~ "->" ~ type_expr }
 
 type_ident = ${ #name = ident ~ #args = type_args? }
 type_args  =  { "<" ~ MLF ~ type_ident* ~ MLF ~ ">" }
@@ -48,7 +51,7 @@ float   = @{
 byte    = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
 boolean = @{ "true" | "false" }
 
-KEYWORD   = _{ "let" }
+KEYWORD   = _{ "let" | "rec" | "enum" }
 TERMINATE = _{ LF | EOI | ";" }
 MLF       = _{ (LF)* }
 LF        = _{ "\n" | "\r" }

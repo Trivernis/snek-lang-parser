@@ -1,40 +1,40 @@
 
-type Food = #[
+type Food = enum {
 	Apple Num
 	Banana Num
 	Cereal Num
 	Milk #(String Num)
-]
+}
 
-type Utils = #[
+type Utils = enum {
 	Paper Num
 	Detergent Num
 	Pencils Num
-]
+}
 
-type Packaging = #[
+type Packaging = enum {
 	Bag
 	PlasticBag
-]
+}
 
-type ShoppingList = #{
+type ShoppingList = rec {
 	food: Food
 	utils: Utils
 	packaging: Packaging
 }
 
-type NestedHell = #[
+type NestedHell = enum {
 	NoNesting Num
-	Nesting #[
-		FirstLevel #[
-			SecondLevel #[
+	Nesting enum {
+		FirstLevel enum {
+			SecondLevel enum {
 				Third Lvl<a>
-			]
-			Second #{
+			}
+			Second rec {
 				first: Num
 				second: Num
 			}
-		]
+		}
 		StillFirst Num<a>
-	]
-]
+	}
+}

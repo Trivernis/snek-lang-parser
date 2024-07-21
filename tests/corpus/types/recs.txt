@@ -1,0 +1,41 @@
+Recs Test
+
+======
+
+type MyRec = rec {
+	first: Num
+	second: Str
+}
+
+======
+
+(file 
+	(statement 
+		(type_decl
+	  	(type_ident
+	  		(ident: "MyRec")
+	  	)
+	  	(type_expr
+	  		(rec
+	  			(rec_field
+	  				(ident: "first")
+	  				(type_expr
+	  					(type_ident
+	  						(ident: "Num")
+	  					)
+	  				)
+	  			)
+	  			(rec_field
+	  				(ident: "second")
+	  				(type_expr
+	  					(type_ident
+	  						(ident: "Str")
+	  					)
+	  				)
+	  			)
+	  		)
+	  	)
+		)
+	)
+	(EOI: "")
+)

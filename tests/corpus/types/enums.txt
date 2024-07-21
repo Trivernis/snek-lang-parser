@@ -1,0 +1,41 @@
+Enums Test
+
+======
+
+type MyEnum = enum {
+	First Num
+	Second Str
+}
+
+======
+
+(file 
+	(statement 
+		(type_decl
+	  	(type_ident
+	  		(ident: "MyEnum")
+	  	)
+	  	(type_expr
+	  		(enum
+	  			(enum_vrt
+	  				(ident: "First")
+	  				(type_expr
+	  					(type_ident
+	  						(ident: "Num")
+	  					)
+	  				)
+	  			)
+	  			(enum_vrt
+	  				(ident: "Second")
+	  				(type_expr
+	  					(type_ident
+	  						(ident: "Str")
+	  					)
+	  				)
+	  			)
+	  		)
+	  	)
+		)
+	)
+	(EOI: "")
+)
