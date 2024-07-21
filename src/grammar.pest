@@ -1,1 +1,19 @@
 file = { "hello world" }
+
+literal = { string | number | boolean }
+
+string = { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
+
+number = _{ byte | float | integer }
+
+integer = @{ "-"? ~ ASCII_DIGIT+ }
+
+float = @{
+    "-"? ~ (ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT* | ASCII_DIGIT* ~ "." ~ ASCII_DIGIT+)
+}
+
+byte = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
+
+boolean = @{ "true" | "false" }
+
+WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
