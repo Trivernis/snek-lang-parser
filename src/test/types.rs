@@ -50,6 +50,40 @@ fn it_parses_tuples() {
 }
 
 #[test]
+fn it_parses_recs() {
+    parses_to!(parser: SnekParser, input: "type MyRec = #{\nfield1: Num\n field2: Num2 }", rule: Rule::statement, tokens: [
+        statement(0, 43, [
+            type_decl(0, 43, [
+                type_ident(5, 10, [
+                    ident(5, 10)
+                ]),
+                type_expr(13, 43, [
+                    rec(13, 43, [
+                        rec_field(16, 27, [
+                            ident(16, 22),
+                            type_expr(24, 27, [
+                                type_ident(24, 27, [
+                                    ident(24, 27)
+                                ])
+                            ]),
+                        ]),
+                        rec_field(29, 41, [
+                            ident(29, 35),
+                            type_expr(37, 41, [
+                                type_ident(37, 41, [
+                                    ident(37, 41)
+                                ])
+                            ]),
+                        ])
+                    ])
+                ])
+            ]),
+            EOI(43, 43)
+        ])
+    ]);
+}
+
+#[test]
 fn it_parses_generics() {
     parses_to!(parser: SnekParser, input: "type MyNum<a> = Num<a>", rule: Rule::statement, tokens: [
         statement(0, 22, [
