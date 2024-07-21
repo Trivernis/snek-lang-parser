@@ -8,7 +8,7 @@ infix_expr = {
     #lhs = term ~ operator ~ #rhs = expr
 }
 
-operator = { "+" | "-" | "*" | "/" | "&&" | "||" }
+operator = { "+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==" | "!=" }
 
 ident         = @{ ALPHABETIC ~ (ALPHABETIC | NUMBER | "_")* | quoted_indent }
 quoted_indent = _{ "`" ~ (!"`" ~ ANY)+ ~ "`" }
