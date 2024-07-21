@@ -1,46 +1,25 @@
 use pest::{consumes_to, parses_to};
+use pest_test::PestTester;
 
 use crate::{Rule, SnekParser};
+use lazy_static::lazy_static;
 
-#[test]
-fn it_parses_plain_assignments() {
-    parses_to!(parser: SnekParser, input: "let a = 1", rule: Rule::statement, tokens: [
-        statement(0, 9, [
-            decl(0, 9, [
-                ident(4, 5),
-                expr(8, 9, [
-                    literal(8, 9, [
-                        integer(8, 9)
-                    ]),
-                ])
-            ]),
-            EOI(9, 9)
-        ])
-    ]);
+lazy_static! {
+    static ref TESTER: PestTester<Rule, SnekParser> = super::s_tester("statements");
 }
 
 #[test]
-fn it_parses_assignments_with_args() {
-    parses_to!(parser: SnekParser, input: "let add a = a + 1", rule: Rule::statement, tokens: [
-        statement(0, 17, [
-            decl(0, 17, [
-                ident(4, 7),
-                ident(8, 9),
-                expr(12, 17, [
-                    infix_expr(12, 17, [
-                        ident(12, 13),
-                        operator(14, 15),
-                        expr(16, 17, [
-                            literal(16, 17, [
-                                integer(16, 17)
-                            ])
-                        ])
-                    ])
-                ])
-            ]),
-            EOI(17, 17)
-        ]),
-    ]);
+fn it_parses_simple_decl() {
+    if let Err(e) = (*TESTER).evaluate_strict("simple-decl") {
+        panic!("{e}")
+    }
+}
+
+#[test]
+fn it_parses_decl_with_args() {
+    if let Err(e) = (*TESTER).evaluate_strict("fn-decl") {
+        panic!("{e}")
+    }
 }
 
 #[test]

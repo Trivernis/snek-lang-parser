@@ -1,0 +1,43 @@
+Args Declaration Test
+
+======
+
+let add a b = a + b
+let add1 a = add a 1
+
+======
+
+(file
+  (statement
+    (decl
+      (ident: "add")
+      (ident: "a")
+      (ident: "b")
+      (expr
+        (infix_expr
+          (ident: "a")
+          (operator: "+")
+          (expr
+            (ident: "b")
+          )
+        )
+      )
+    )
+  )
+	(statement
+    (decl
+      (ident: "add1")
+      (ident: "a")
+      (expr
+        (call_expr
+          (ident: "add")
+          (ident: "a")
+          (literal
+            (integer: "1")
+          )
+        )
+      )
+    )
+  )
+  (EOI: "")
+)

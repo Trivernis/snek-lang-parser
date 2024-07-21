@@ -1,0 +1,46 @@
+Declaration Test
+
+======
+
+let a = 1 + 1
+let b = a + 2
+
+======
+
+(file
+  (statement
+    (decl
+      (ident: "a")
+      (expr
+        (infix_expr
+          (literal
+            (integer: "1")
+          )
+          (operator: "+")
+          (expr
+            (literal
+              (integer: "1")
+            )
+          )
+        )
+      )
+    )
+  )
+	(statement
+    (decl
+      (ident: "b")
+      (expr
+        (infix_expr
+          (ident: "a")
+          (operator: "+")
+          (expr
+            (literal
+              (integer: "2")
+            )
+          )
+        )
+      )
+    )
+  )
+  (EOI: "")
+)
