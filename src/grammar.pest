@@ -8,7 +8,7 @@ block      =  { "{" ~ MLF ~ block_line ~ MLF ~ "}" }
 block_line = _{ expr | (statement ~ MLF)* }
 
 type_decl =  { "type" ~ #name = type_ident ~ "=" ~ type_expr }
-type_expr =  { type_term | func | type_ident }
+type_expr =  { func | type_term | type_ident }
 type_term = _{ tuple | rec | enum | type_ident }
 
 tuple       =  { "#(" ~ MLF ~ tuple_entry* ~ MLF ~ ")" }

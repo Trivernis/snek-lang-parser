@@ -75,3 +75,10 @@ fn it_parses_generics() {
         panic!("{e}")
     }
 }
+
+#[test]
+fn it_parses_functions() {
+    if let Err(e) = (*TESTER).evaluate_strict("functions") {
+        panic!("{e}")
+    }
+}

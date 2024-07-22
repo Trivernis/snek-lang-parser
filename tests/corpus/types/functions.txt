@@ -1,0 +1,37 @@
+Recs Test
+
+======
+
+type MyFn = Num -> Num -> Str
+
+======
+
+(file 
+	(statement 
+		(type_decl
+			(type_ident
+				(ident: "MyFn")
+			)
+			(type_expr
+				(func
+					(type_ident
+						(ident: "Num")
+					)
+					(type_expr
+						(func
+							(type_ident
+								(ident: "Num")
+							)
+							(type_expr
+								(type_ident
+									(ident: "Str")
+								)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+	(EOI: "")
+)
