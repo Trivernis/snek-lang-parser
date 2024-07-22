@@ -3,7 +3,7 @@ file = {
 }
 
 statement  =  { (decl | type_decl | expr) ~ TERMINATE }
-decl       =  { "let" ~ #name = ident ~ #args = (ident)* ~ #type = type_annot? ~ "=" ~ expr }
+decl       =  { "let" ~ #name = ident ~ #args = (ident)* ~ #type = type_annot? ~ "=" ~ MLF ~ expr }
 block      =  { "{" ~ MLF ~ block_line ~ MLF ~ "}" }
 block_line = _{ expr | (statement ~ MLF)* }
 

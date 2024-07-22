@@ -43,6 +43,13 @@ add2 4
 
 // nested function calls
 add2 (sub4 (mul2 4)) 
+
+// if is an expression that can return a value
+let value = 
+  if a == b then
+    a
+  else
+    b
 ```
 
 ### Declarations

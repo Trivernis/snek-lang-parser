@@ -12,6 +12,12 @@ if 1 != 1 then {
   a + 1
 }
 
+let value = 
+  if a == b then
+    a
+  else
+    b
+
 ======
 
 (file
@@ -83,6 +89,28 @@ if 1 != 1 then {
                 )
               )
             )
+          )
+        )
+      )
+    )
+  )
+  (statement
+    (decl
+      (ident: "value")
+      (expr
+        (if
+          (expr
+            (infix_expr
+              (ident: "a")
+              (operator: "==")
+              (ident: "b")
+            )
+          )
+          (expr
+            (ident: "a")
+          )
+          (expr
+            (ident: "b")
           )
         )
       )
