@@ -7,6 +7,24 @@ decl       =  { "let" ~ #name = ident ~ #args = (ident)* ~ #type = type_annot? ~
 block      =  { "{" ~ MLF ~ block_line ~ MLF ~ "}" }
 block_line = _{ expr | (statement ~ MLF)* }
 
+// expressions
+
+expr       =  { infix_expr | call_expr | if | term }
+if         =  { "if" ~ #predicate = expr ~ "then" ~ MLF ~ #then = expr ~ (MLF ~ "else" ~ MLF ~ #else = expr)? }
+term       = _{ ident | literal | "(" ~ MLF ~ expr ~ MLF ~ ")" | block }
+call_expr  =  {
+    #name = ident ~ #args = (term)+
+}
+infix_expr =  {
+    #lhs = term ~ operator ~ #rhs = (infix_expr | term)
+}
+operator   =  { "+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==" | "!=" }
+
+ident         = @{ !KEYWORD ~ ALPHABETIC ~ (ALPHABETIC | NUMBER | "_")* | quoted_indent }
+quoted_indent = _{ "`" ~ (!"`" ~ ANY)+ ~ "`" }
+
+// types
+
 type_annot = { ":" ~ type_expr }
 
 type_decl =  { "type" ~ #name = type_ident ~ "=" ~ type_expr }
@@ -27,33 +45,35 @@ func = { type_term ~ "->" ~ type_expr }
 type_ident = ${ #name = ident ~ #args = type_args? }
 type_args  =  { "<" ~ MLF ~ type_ident* ~ MLF ~ ">" }
 
-expr       =  { infix_expr | call_expr | if | term }
-if         =  { "if" ~ #predicate = expr ~ "then" ~ MLF ~ #then = expr ~ (MLF ~ "else" ~ MLF ~ #else = expr)? }
-term       = _{ ident | literal | "(" ~ MLF ~ expr ~ MLF ~ ")" | block }
-call_expr  =  {
-    #name = ident ~ #args = (term)+
-}
-infix_expr =  {
-    #lhs = term ~ operator ~ #rhs = (infix_expr | term)
-}
+// match patterns that destructure a variant
+// TODO: copy it for declarations where destructuring can only be done into one variant
 
-operator = { "+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==" | "!=" }
+pattern                  = _{ tuple_pattern | rec_pattern | enum_pattern | #var_name = ident }
+tuple_pattern            =  { "#(" ~ MLF ~ (pattern ~ MLF)+ ~ ")" }
+rec_pattern              =  { "{" ~ MLF ~ (rec_pattern_field ~ MLF)+ ~ "}" }
+rec_pattern_field        =  { #var_name = ident | rec_pattern_mapped_field ~ TERMINATE }
+rec_pattern_mapped_field = _{ #field_name = ident ~ ":" ~ pattern }
+enum_pattern             =  { #vrt = ident ~ pattern+ }
 
-ident         = @{ !KEYWORD ~ ALPHABETIC ~ (ALPHABETIC | NUMBER | "_")* | quoted_indent }
-quoted_indent = _{ "`" ~ (!"`" ~ ANY)+ ~ "`" }
+// values
 
 literal = { quoted_string | number | boolean | char }
 
 quoted_string = _{ "\"" ~ string ~ "\"" }
 string        =  { (!"\"" ~ ANY)* }
 char          =  { "'" ~ !"'" ~ ANY ~ "'" }
-number        = _{ byte | float | integer }
-integer       = @{ "-"? ~ ASCII_DIGIT+ }
-float         = @{
+boolean       = @{ "true" | "false" }
+
+// numeric values
+
+number  = _{ byte | float | integer }
+integer = @{ "-"? ~ ASCII_DIGIT+ }
+float   = @{
     "-"? ~ (ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT* | ASCII_DIGIT* ~ "." ~ ASCII_DIGIT+)
 }
-byte          = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
-boolean       = @{ "true" | "false" }
+byte    = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
+
+// utils
 
 KEYWORD   = _{ "let" | "rec" | "enum" | "if" | "then" | "else" }
 TERMINATE = _{ LF | EOI | ";" }
