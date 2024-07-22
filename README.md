@@ -71,6 +71,16 @@ let complex_addition a b c = {
   let e = b + c
   d + e + 1
 }
+
+// type annotations
+let a: Num = 1
+
+// functions
+let add3 a: Num -> Num = a + 3
+
+// multi arg
+let add_all a b c: Num -> Num -> Num -> Num =
+  a + b + c 
 ```
 
 ### Complex types
