@@ -3,9 +3,11 @@ file = {
 }
 
 statement  =  { (decl | type_decl | expr) ~ TERMINATE }
-decl       =  { "let" ~ #name = ident ~ #args = (ident)* ~ "=" ~ expr }
+decl       =  { "let" ~ #name = ident ~ #args = (ident)* ~ #type = type_annot? ~ "=" ~ expr }
 block      =  { "{" ~ MLF ~ block_line ~ MLF ~ "}" }
 block_line = _{ expr | (statement ~ MLF)* }
+
+type_annot = { ":" ~ type_expr }
 
 type_decl =  { "type" ~ #name = type_ident ~ "=" ~ type_expr }
 type_expr =  { func | type_term | type_ident }

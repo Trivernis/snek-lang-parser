@@ -23,6 +23,13 @@ fn it_parses_decl_with_args() {
 }
 
 #[test]
+fn it_parses_decl_with_type() {
+    if let Err(e) = (*TESTER).evaluate_strict("decl-with-type") {
+        panic!("{e}")
+    }
+}
+
+#[test]
 fn it_parses_blocks() {
     parses_to!(parser: SnekParser, input: "let a = { 1 + 1 }", rule: Rule::statement, tokens: [
         statement(0, 17, [

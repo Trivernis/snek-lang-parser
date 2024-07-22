@@ -1,0 +1,66 @@
+Declaration Test
+
+======
+
+let a: Num = 1 + 1
+let add_a x: Num -> Num = x + a
+
+======
+
+(file
+  (statement
+    (decl
+      (ident: "a")
+      (type_annot
+        (type_expr
+          (type_ident
+            (ident: "Num")
+          )
+        )
+      )
+      (expr
+        (infix_expr
+          (literal
+            (integer: "1")
+          )
+          (operator: "+")
+          (expr
+            (literal
+              (integer: "1")
+            )
+          )
+        )
+      )
+    )
+  )
+  (statement
+    (decl
+      (ident: "add_a")
+      (ident: "x")
+      (type_annot
+        (type_expr
+          (func
+            (type_ident
+              (ident: "Num")
+            )
+            (type_expr
+              (type_ident
+                (ident: "Num")
+              )
+            )
+          )
+        )
+      )
+      (expr
+        (infix_expr
+          (ident: "x")
+          (operator: "+")
+          (expr
+            (ident: "a")
+          )
+        )
+      )
+    )
+  )
+  (EOI: "")
+)
