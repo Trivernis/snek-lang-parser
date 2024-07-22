@@ -9,4 +9,4 @@ let basic_value = 10
 
 let calculation = (1 * 1) + (2 * (2 + 3))
 
-let calculation_with_fn fn = 1 * fn (2 * 2)
+let calculation_with_fn fn = 1 * (fn (2 * 2))

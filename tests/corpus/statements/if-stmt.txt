@@ -1,0 +1,92 @@
+If-Statements
+
+======
+
+if a == "test" then
+  print "test"
+else
+  print "no test"
+
+if 1 != 1 then {
+  let a = 1
+  a + 1
+}
+
+======
+
+(file
+  (statement
+    (expr
+      (if
+        (expr
+          (infix_expr
+            (ident: "a")
+            (operator: "==")
+            (literal
+              (string: "test")
+            )
+          )
+        )
+        (expr
+          (call_expr
+            (ident: "print")
+            (literal
+              (string: "test")
+            )
+          )
+        )
+        (expr
+          (call_expr
+            (ident: "print")
+            (literal
+              (string: "no test")
+            )
+          )
+        )
+      )
+    )
+  )
+  (statement
+    (expr
+      (if
+        (expr
+          (infix_expr
+            (literal
+              (integer: "1")
+            )
+            (operator: "!=")
+            (literal
+              (integer: "1")
+            )
+          )
+        )
+        (expr
+          (block
+            (statement
+              (decl
+                (ident: "a")
+                (expr
+                  (literal
+                    (integer: "1")
+                  )
+                )
+              )
+            )
+            (statement
+              (expr
+                (infix_expr
+                  (ident: "a")
+                  (operator: "+")
+                  (literal
+                    (integer: "1")
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+  (EOI: "")
+)

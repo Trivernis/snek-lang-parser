@@ -60,17 +60,17 @@ fn it_parses_bytes() {
 fn it_parses_strings() {
     parses_to!(parser: SnekParser, input: r#""Hello world""#, rule: Rule::literal, tokens: [
         literal(0, 13, [
-            string(0, 13)
+            string(1, 12)
         ])
     ]);
     parses_to!(parser: SnekParser, input: r#""""#, rule: Rule::literal, tokens: [
         literal(0, 2, [
-            string(0, 2)
+            string(1, 1)
         ])
     ]);
     parses_to!(parser: SnekParser, input: r#""\"""#, rule: Rule::literal, tokens: [
         literal(0, 3, [
-            string(0, 3)
+            string(1, 2)
         ])
     ]);
 }

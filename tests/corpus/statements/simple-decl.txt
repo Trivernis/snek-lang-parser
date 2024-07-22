@@ -17,26 +17,22 @@ let b = a + 2
             (integer: "1")
           )
           (operator: "+")
-          (expr
-            (literal
-              (integer: "1")
-            )
+          (literal
+            (integer: "1")
           )
         )
       )
     )
   )
-	(statement
+  (statement
     (decl
       (ident: "b")
       (expr
         (infix_expr
           (ident: "a")
           (operator: "+")
-          (expr
-            (literal
-              (integer: "2")
-            )
+          (literal
+            (integer: "2")
           )
         )
       )

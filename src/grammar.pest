@@ -27,13 +27,14 @@ func = { type_term ~ "->" ~ type_expr }
 type_ident = ${ #name = ident ~ #args = type_args? }
 type_args  =  { "<" ~ MLF ~ type_ident* ~ MLF ~ ">" }
 
-expr       =  { infix_expr | call_expr | term }
+expr       =  { infix_expr | call_expr | if | term }
+if         =  { "if" ~ #predicate = expr ~ "then" ~ MLF ~ #then = expr ~ (MLF ~ "else" ~ MLF ~ #else = expr)? }
 term       = _{ ident | literal | "(" ~ MLF ~ expr ~ MLF ~ ")" | block }
 call_expr  =  {
     #name = ident ~ #args = (term)+
 }
 infix_expr =  {
-    #lhs = term ~ operator ~ #rhs = expr
+    #lhs = term ~ operator ~ #rhs = (infix_expr | term)
 }
 
 operator = { "+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==" | "!=" }
@@ -41,19 +42,20 @@ operator = { "+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==" | "!=" }
 ident         = @{ !KEYWORD ~ ALPHABETIC ~ (ALPHABETIC | NUMBER | "_")* | quoted_indent }
 quoted_indent = _{ "`" ~ (!"`" ~ ANY)+ ~ "`" }
 
-literal = { string | number | boolean | char }
+literal = { quoted_string | number | boolean | char }
 
-string  =  { "\"" ~ (!"\"" ~ ANY)* ~ "\"" }
-char    =  { "'" ~ !"'" ~ ANY ~ "'" }
-number  = _{ byte | float | integer }
-integer = @{ "-"? ~ ASCII_DIGIT+ }
-float   = @{
+quoted_string = _{ "\"" ~ string ~ "\"" }
+string        =  { (!"\"" ~ ANY)* }
+char          =  { "'" ~ !"'" ~ ANY ~ "'" }
+number        = _{ byte | float | integer }
+integer       = @{ "-"? ~ ASCII_DIGIT+ }
+float         = @{
     "-"? ~ (ASCII_DIGIT+ ~ "." ~ ASCII_DIGIT* | ASCII_DIGIT* ~ "." ~ ASCII_DIGIT+)
 }
-byte    = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
-boolean = @{ "true" | "false" }
+byte          = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
+boolean       = @{ "true" | "false" }
 
-KEYWORD   = _{ "let" | "rec" | "enum" }
+KEYWORD   = _{ "let" | "rec" | "enum" | "if" | "then" | "else" }
 TERMINATE = _{ LF | EOI | ";" }
 MLF       = _{ (LF)* }
 LF        = _{ "\n" | "\r" }

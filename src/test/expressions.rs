@@ -11,10 +11,8 @@ fn it_parses_addition() {
                     integer(0, 1)
                 ]),
                 operator(2, 3),
-                expr(4, 5, [
-                    literal(4, 5, [
-                        integer(4, 5)
-                    ])
+                literal(4, 5, [
+                    integer(4, 5)
                 ])
             ])
         ])
@@ -45,9 +43,7 @@ fn it_parses_addition_with_variables() {
             infix_expr(0, 14, [
                 ident(0, 5),
                 operator(6, 7),
-                expr(8, 14, [
-                    ident(8, 14)
-                ])
+                ident(8, 14)
             ])
         ])
     ]);
@@ -62,10 +58,8 @@ fn it_parses_subtraction() {
                     float(0, 3)
                 ]),
                 operator(4, 5),
-                expr(6, 9, [
-                    literal(6, 9, [
-                        float(6, 9)
-                    ])
+                literal(6, 9, [
+                    float(6, 9)
                 ])
             ])
         ])
@@ -81,17 +75,13 @@ fn it_parses_multiple_operations() {
                     integer(0, 1)
                 ]),
                 operator(2, 3),
-                expr(4, 9, [
-                    infix_expr(4, 9, [
-                        literal(4, 5, [
-                            integer(4, 5)
-                        ]),
-                        operator(6, 7),
-                        expr(8, 9, [
-                            literal(8, 9, [
-                                integer(8, 9)
-                            ])
-                        ])
+                infix_expr(4, 9, [
+                    literal(4, 5, [
+                        integer(4, 5)
+                    ]),
+                    operator(6, 7),
+                    literal(8, 9, [
+                        integer(8, 9)
                     ])
                 ])
             ])
@@ -119,11 +109,9 @@ fn it_parses_calls() {
                             integer(7, 8)
                         ]),
                         operator(9, 10),
-                        expr(11, 12, [
                             literal(11, 12, [
                                 integer(11, 12)
                             ]),
-                        ])
                     ])
                 ]),
                 ident(14, 15)
@@ -141,11 +129,9 @@ fn it_parses_calls() {
                                 integer(7, 8)
                             ]),
                             operator(9, 10),
-                            expr(11, 12, [
-                                literal(11, 12, [
-                                    integer(11, 12)
-                                ]),
-                            ])
+                            literal(11, 12, [
+                                integer(11, 12)
+                            ]),
                         ])
                     ])
                 ]),

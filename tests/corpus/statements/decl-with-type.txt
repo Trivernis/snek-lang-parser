@@ -1,4 +1,4 @@
-Declaration Test
+Declaration with types test
 
 ======
 
@@ -24,10 +24,8 @@ let add_a x: Num -> Num = x + a
             (integer: "1")
           )
           (operator: "+")
-          (expr
-            (literal
-              (integer: "1")
-            )
+          (literal
+            (integer: "1")
           )
         )
       )
@@ -55,9 +53,7 @@ let add_a x: Num -> Num = x + a
         (infix_expr
           (ident: "x")
           (operator: "+")
-          (expr
-            (ident: "a")
-          )
+          (ident: "a")
         )
       )
     )

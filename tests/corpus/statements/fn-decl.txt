@@ -1,4 +1,4 @@
-Args Declaration Test
+Function Declaration Test
 
 ======
 
@@ -17,9 +17,7 @@ let add1 a = add a 1
         (infix_expr
           (ident: "a")
           (operator: "+")
-          (expr
-            (ident: "b")
-          )
+          (ident: "b")
         )
       )
     )

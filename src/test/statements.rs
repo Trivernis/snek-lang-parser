@@ -30,6 +30,13 @@ fn it_parses_decl_with_type() {
 }
 
 #[test]
+fn it_parses_if_stmt() {
+    if let Err(e) = (*TESTER).evaluate_strict("if-stmt") {
+        panic!("{e}")
+    }
+}
+
+#[test]
 fn it_parses_blocks() {
     parses_to!(parser: SnekParser, input: "let a = { 1 + 1 }", rule: Rule::statement, tokens: [
         statement(0, 17, [
@@ -43,10 +50,8 @@ fn it_parses_blocks() {
                                    integer(10, 11)
                                ]),
                                operator(12, 13),
-                               expr(14, 15, [
-                                   literal(14, 15, [
-                                       integer(14, 15)
-                                   ])
+                               literal(14, 15, [
+                                   integer(14, 15)
                                ])
                            ])
                        ])
@@ -75,10 +80,8 @@ fn it_parses_multiline_blocks() {
                                            integer(18, 19)
                                        ]),
                                        operator(20, 21),
-                                       expr(22, 23, [
-                                           literal(22, 23, [
-                                               integer(22, 23)
-                                           ])
+                                       literal(22, 23, [
+                                           integer(22, 23)
                                        ])
                                    ])
                                ])
