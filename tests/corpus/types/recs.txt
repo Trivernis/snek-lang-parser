@@ -2,7 +2,7 @@ Recs Test
 
 ======
 
-type MyRec = rec {
+type MyRec = {
 	first: Num
 	second: Str
 }
@@ -13,7 +13,7 @@ type MyRec = rec {
 	(statement 
 		(type_decl
 			(type_ident
-				(ident: "MyRec")
+				(type_name: "MyRec")
 			)
 			(type_expr
 				(rec
@@ -21,7 +21,7 @@ type MyRec = rec {
 						(ident: "first")
 						(type_expr
 							(type_ident
-								(ident: "Num")
+								(type_name: "Num")
 							)
 						)
 					)
@@ -29,7 +29,7 @@ type MyRec = rec {
 						(ident: "second")
 						(type_expr
 							(type_ident
-								(ident: "Str")
+								(type_name: "Str")
 							)
 						)
 					)

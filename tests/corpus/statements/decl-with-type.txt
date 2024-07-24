@@ -14,7 +14,7 @@ let add_a x: Num -> Num = x + a
       (type_annot
         (type_expr
           (type_ident
-            (ident: "Num")
+            (type_name: "Num")
           )
         )
       )
@@ -39,11 +39,11 @@ let add_a x: Num -> Num = x + a
         (type_expr
           (func
             (type_ident
-              (ident: "Num")
+              (type_name: "Num")
             )
             (type_expr
               (type_ident
-                (ident: "Num")
+                (type_name: "Num")
               )
             )
           )

@@ -10,49 +10,16 @@ lazy_static! {
 
 #[test]
 fn it_parses_aliases() {
-    parses_to!(parser: SnekParser, input: "type MyNum = Num", rule: Rule::statement, tokens: [
-        statement(0, 16, [
-            type_decl(0, 16, [
-                type_ident(5, 10, [
-                    ident(5, 10)
-                ]),
-                type_expr(13, 16, [
-                    type_ident(13, 16, [
-                        ident(13, 16)
-                    ])
-                ])
-            ]),
-            EOI(16, 16)
-        ])
-    ]);
+    if let Err(e) = (*TESTER).evaluate_strict("aliases") {
+        panic!("{e}")
+    }
 }
 
 #[test]
 fn it_parses_tuples() {
-    parses_to!(parser: SnekParser, input: "type MyTuple = #(Str Int)", rule: Rule::statement, tokens: [
-        statement(0, 25, [
-            type_decl(0, 25, [
-                type_ident(5, 12, [
-                    ident(5, 12)
-                ]),
-                type_expr(15, 25, [
-                    tuple(15, 25, [
-                        type_expr(17, 20, [
-                            type_ident(17, 20, [
-                                ident(17, 20)
-                            ])
-                        ]),
-                        type_expr(21, 24, [
-                            type_ident(21, 24, [
-                                ident(21, 24)
-                            ])
-                        ]),
-                    ])
-                ])
-            ]),
-            EOI(25, 25)
-        ])
-    ]);
+    if let Err(e) = (*TESTER).evaluate_strict("tuples") {
+        panic!("{e}")
+    }
 }
 
 #[test]

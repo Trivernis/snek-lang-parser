@@ -2,7 +2,7 @@ Generics Test
 
 ======
 
-type MyNum<a> = Num<a>
+type MyNum a = Num a
 
 ======
 
@@ -10,21 +10,13 @@ type MyNum<a> = Num<a>
 	(statement 
 		(type_decl
 		  (type_ident
-	  		(ident: "MyNum")
-				(type_args 
-					(type_ident
-						(ident: "a")
-					)
-				)
+			(type_name: "MyNum")
+			(type_arg: "a")
 		  )
 	  	(type_expr
 				(type_ident
-					(ident: "Num")
-					(type_args 
-						(type_ident
-							(ident: "a")
-						)
-					)
+					(type_name: "Num")
+					(type_arg: "a")
 				)
 			)
 		)

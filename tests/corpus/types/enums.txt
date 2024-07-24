@@ -2,10 +2,10 @@ Enums Test
 
 ======
 
-type MyEnum = enum {
-	First Num
-	Second Str
-}
+type MyEnum = (
+	| First Num
+	| Second Str
+)
 
 ======
 
@@ -13,7 +13,7 @@ type MyEnum = enum {
 	(statement 
 		(type_decl
 	  	(type_ident
-	  		(ident: "MyEnum")
+	  		(type_name: "MyEnum")
 	  	)
 	  	(type_expr
 	  		(enum
@@ -21,7 +21,7 @@ type MyEnum = enum {
 	  				(ident: "First")
 	  				(type_expr
 	  					(type_ident
-	  						(ident: "Num")
+	  						(type_name: "Num")
 	  					)
 	  				)
 	  			)
@@ -29,7 +29,7 @@ type MyEnum = enum {
 	  				(ident: "Second")
 	  				(type_expr
 	  					(type_ident
-	  						(ident: "Str")
+	  						(type_name: "Str")
 	  					)
 	  				)
 	  			)

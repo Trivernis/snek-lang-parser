@@ -87,36 +87,36 @@ let add_all a b c: Num -> Num -> Num -> Num =
 
 The value for a type is one of the following:
 
-- `enum {...}` enum
-- `rec {...}` record
+- `(|...|...)` enum
+- `{...}` record
 - `#(...)` tuple
 
 These expressions can be nested.
 
 ```sk
-type MyEnum = enum {
-  Var1 Int
-  Var2 Bool
-}
+type MyEnum = (
+  | Var1 Int
+  | Var2 Bool
+)
 
-type MyRec = rec {
+type MyRec = {
   field1: Float
   field2: Str
 }
 
-// records declared in one line need to put a semicolon after each field declaration
-type MyRecOneline = rec {field1: Float; field2: Str}
+// records declared in one line need to put a comma after each field declaration
+type MyRecOneline = {field1: Float, field2: Str}
 
-// tuples can be declared in one line without a semicolon because there's no ambiguity 
-type MyTuple = #(Float Str)
+// so need tuples
+type MyTuple = #(Float, Str)
 
-type Nested = rec {
-  field1: enum {
-    Boolean Bool
-    Number Float
-  }
-  field2: #(Bool Bool)
-  field3: rec {
+type Nested = {
+  field1: (
+    | Boolean Bool
+    | Number Float
+  )
+  field2: #(Bool, Bool)
+  field3: {
     first: Int
     second: Int
   }

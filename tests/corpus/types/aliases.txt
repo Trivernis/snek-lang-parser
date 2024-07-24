@@ -1,0 +1,23 @@
+Aliases Test
+
+======
+
+type MyNum = Num
+
+======
+
+(file 
+	(statement 
+		(type_decl
+			(type_ident
+				(type_name: "MyNum")
+			)
+			(type_expr
+				(type_ident
+					(type_name: "Num")
+				)
+			)
+		)
+	)
+	(EOI: "")
+)

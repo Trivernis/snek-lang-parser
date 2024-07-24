@@ -1,0 +1,32 @@
+Tuples Test
+
+======
+
+type MyTuple = #(Str, Int)
+
+======
+
+(file 
+	(statement 
+		(type_decl
+	  	(type_ident
+	  		(type_name: "MyTuple")
+	  	)
+	  	(type_expr
+	  		(tuple
+				(type_expr
+					(type_ident
+						(type_name: "Str")
+					)
+				)
+				(type_expr
+					(type_ident
+						(type_name: "Int")
+					)
+				)
+	  		)
+	  	)
+		)
+	)
+	(EOI: "")
+)

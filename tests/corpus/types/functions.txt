@@ -10,21 +10,21 @@ type MyFn = Num -> Num -> Str
 	(statement 
 		(type_decl
 			(type_ident
-				(ident: "MyFn")
+				(type_name: "MyFn")
 			)
 			(type_expr
 				(func
 					(type_ident
-						(ident: "Num")
+						(type_name: "Num")
 					)
 					(type_expr
 						(func
 							(type_ident
-								(ident: "Num")
+								(type_name: "Num")
 							)
 							(type_expr
 								(type_ident
-									(ident: "Str")
+									(type_name: "Str")
 								)
 							)
 						)

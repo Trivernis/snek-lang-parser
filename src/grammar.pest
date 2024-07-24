@@ -20,7 +20,7 @@ infix_expr =  {
 }
 operator   =  { "+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==" | "!=" }
 
-ident         = @{ !KEYWORD ~ ALPHABETIC ~ (ALPHABETIC | NUMBER | "_")* | quoted_indent }
+ident         = @{ SYM_ANY_CASE | quoted_indent }
 quoted_indent = _{ "`" ~ (!"`" ~ ANY)+ ~ "`" }
 
 // types
@@ -31,19 +31,20 @@ type_decl =  { "type" ~ #name = type_ident ~ "=" ~ type_expr }
 type_expr =  { func | type_term | type_ident }
 type_term = _{ tuple | rec | enum | type_ident }
 
-tuple       =  { "#(" ~ MLF ~ tuple_entry* ~ MLF ~ ")" }
+tuple       =  { "#(" ~ MLF ~ (tuple_entry ~ SEPARATE)* ~ MLF ~ tuple_entry? ~ ")" }
 tuple_entry = _{ type_expr ~ MLF }
 
-rec       = { "rec" ~ "{" ~ MLF ~ (rec_field ~ TERMINATE ~ MLF)* ~ rec_field? ~ MLF ~ "}" }
+rec       = { "{" ~ MLF ~ (rec_field ~ SEPARATE ~ MLF)* ~ rec_field? ~ MLF ~ "}" }
 rec_field = { #field_name = ident ~ ":" ~ #field_type = type_expr* }
 
-enum     = { "enum" ~ "{" ~ MLF ~ (enum_vrt ~ TERMINATE ~ MLF)* ~ enum_vrt? ~ "}" }
+enum     = { "(" ~ MLF ~ ("|" ~ enum_vrt ~ MLF)* ~ "|"? ~ MLF ~ ")" }
 enum_vrt = { #vrt_name = ident ~ type_expr? }
 
 func = { type_term ~ "->" ~ type_expr }
 
-type_ident = ${ #name = ident ~ #args = type_args? }
-type_args  =  { "<" ~ MLF ~ type_ident* ~ MLF ~ ">" }
+type_ident =  { #name = type_name ~ #args = (type_arg)* }
+type_name  = @{ SYM_PASCAL_CASE }
+type_arg   = @{ SYM_CAMEL_CASE }
 
 // match patterns that destructure a variant
 // TODO: copy it for declarations where destructuring can only be done into one variant
@@ -75,8 +76,13 @@ byte    = @{ "0x" ~ ASCII_HEX_DIGIT{1, 2} | "0b" ~ ASCII_BIN_DIGIT{0, 8} }
 
 // utils
 
-KEYWORD   = _{ "let" | "rec" | "enum" | "if" | "then" | "else" }
+SYM_ANY_CASE    = @{ !KEYWORD ~ ASCII_ALPHA ~ (ALPHABETIC | NUMBER | "_")* }
+SYM_PASCAL_CASE = @{ !KEYWORD ~ ASCII_ALPHA_UPPER ~ (ALPHABETIC | NUMBER | "_")* }
+SYM_CAMEL_CASE  = @{ !KEYWORD ~ ASCII_ALPHA_LOWER ~ (ALPHABETIC | NUMBER | "_")* }
+
+KEYWORD   = _{ "let" | "enum" | "if" | "then" | "else" }
 TERMINATE = _{ LF | EOI | ";" }
+SEPARATE  = _{ LF | EOI | "," }
 MLF       = _{ (LF)* }
 LF        = _{ "\n" | "\r" }
 
