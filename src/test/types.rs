@@ -1,4 +1,3 @@
-use pest::{consumes_to, parses_to};
 use pest_test::PestTester;
 
 use crate::{Rule, SnekParser};

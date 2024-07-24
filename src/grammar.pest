@@ -31,10 +31,10 @@ type_decl =  { "type" ~ #name = type_ident ~ "=" ~ type_expr }
 type_expr =  { func | type_term | type_ident }
 type_term = _{ tuple | rec | enum | type_ident }
 
-tuple       =  { "#(" ~ MLF ~ (tuple_entry ~ SEPARATE)* ~ MLF ~ tuple_entry? ~ ")" }
-tuple_entry = _{ type_expr ~ MLF }
+tuple       =  { "#(" ~ MLF ~ (tuple_entry ~ SEPARATE)* ~ tuple_entry? ~ ")" }
+tuple_entry = _{ type_expr }
 
-rec       = { "{" ~ MLF ~ (rec_field ~ SEPARATE ~ MLF)* ~ rec_field? ~ MLF ~ "}" }
+rec       = { "{" ~ MLF ~ (rec_field ~ SEPARATE)* ~ rec_field? ~ "}" }
 rec_field = { #field_name = ident ~ ":" ~ #field_type = type_expr* }
 
 enum     = { "(" ~ MLF ~ ("|" ~ enum_vrt ~ MLF)* ~ "|"? ~ MLF ~ ")" }
@@ -50,9 +50,9 @@ type_arg   = @{ SYM_CAMEL_CASE }
 // TODO: copy it for declarations where destructuring can only be done into one variant
 
 pattern                  = _{ tuple_pattern | rec_pattern | enum_pattern | #var_name = ident }
-tuple_pattern            =  { "#(" ~ MLF ~ (pattern ~ MLF)+ ~ ")" }
-rec_pattern              =  { "{" ~ MLF ~ (rec_pattern_field ~ MLF)+ ~ "}" }
-rec_pattern_field        =  { #var_name = ident | rec_pattern_mapped_field ~ TERMINATE }
+tuple_pattern            =  { "#(" ~ MLF ~ pattern ~ (SEPARATE ~ pattern)* ~ SEPARATE? ~ ")" }
+rec_pattern              =  { "{" ~ MLF ~ pattern ~ (SEPARATE ~ rec_pattern_field)* ~ SEPARATE? ~ "}" }
+rec_pattern_field        =  { #var_name = ident | rec_pattern_mapped_field ~ SEPARATE }
 rec_pattern_mapped_field = _{ #field_name = ident ~ ":" ~ pattern }
 enum_pattern             =  { #vrt = ident ~ pattern+ }
 
@@ -82,7 +82,7 @@ SYM_CAMEL_CASE  = @{ !KEYWORD ~ ASCII_ALPHA_LOWER ~ (ALPHABETIC | NUMBER | "_")*
 
 KEYWORD   = _{ "let" | "enum" | "if" | "then" | "else" }
 TERMINATE = _{ LF | EOI | ";" }
-SEPARATE  = _{ LF | EOI | "," }
+SEPARATE  = _{ LF+ | MLF ~ EOI | MLF ~ "," ~ MLF }
 MLF       = _{ (LF)* }
 LF        = _{ "\n" | "\r" }
 
